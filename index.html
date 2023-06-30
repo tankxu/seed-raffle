@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
+  <title>Meet Up 大抽奖</title>
+</head>
+
+<body>
+  <div class="flex justify-center items-center h-screen">
+    <div class="w-1/2">
+      <div class="max-w-md mx-auto bg-white rounded p-6 shadow">
+        <div class="text-2xl font-bold mb-4">Meet Up 大抽奖</div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="quantity">数量：</label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="quantity" type="number">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="seed">Seed：</label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="seed" type="text">
+        </div>
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          id="drawBtn">抽奖</button>
+      </div>
+    </div>
+    <div class="w-1/2 ml-8" id="resultContainer"></div>
+  </div>
+
+  <script>
+    function getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    document.getElementById("drawBtn").addEventListener("click", function () {
+      var quantity = parseInt(document.getElementById("quantity").value);
+      var seed = document.getElementById("seed").value;
+
+      if (isNaN(quantity) || quantity <= 0) {
+        alert("请输入一个有效的数量");
+        return;
+      }
+
+      if (seed.length === 0) {
+        alert("请输入Seed");
+        return;
+      }
+
+      Math.seedrandom(seed); // 使用 seed 来初始化随机数生成器
+
+      var result = getRandomInt(1, quantity);
+
+      document.getElementById("resultContainer").innerHTML = '<div class="bg-gray-200 rounded p-6 shadow text-4xl text-center">' + result + '</div>';
+    });
+  </script>
+</body>
+
+</html>
